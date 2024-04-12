@@ -108,18 +108,7 @@ ORDER BY [ProductID]">
         <div class="container mt-3">
             <div class="form-group">
                 <p>To create a new category, enter the category information and click Add New Category</p>
-                <div class="col-sm-4 d-flex align-items-center">
-                    <label for="addcategoryID" class="d-inline-block w-50">Category ID</label>
-                    <asp:TextBox ID="addcategoryID" runat="server" MaxLength="10" CssClass="form-control" TextMode="Number"></asp:TextBox>
-                </div>
-                <div class="col-sm-4">
-                    <asp:CustomValidator ID="cvcategoryIDExists" runat="server" ControlToValidate="addcategoryID" CssClass="text-danger"
-                        OnServerValidate="cvCategoryIdExists_ServerValidate" ErrorMessage="Category ID already exists" ValidationGroup="group1">
-                    </asp:CustomValidator>
-                    <asp:RequiredFieldValidator ID="rfvcategoryID" runat="server" ControlToValidate="addcategoryID" CssClass="text-danger"
-                        ErrorMessage="Category ID is a required field" ValidationGroup="group1">
-                    </asp:RequiredFieldValidator>
-                </div>
+               
             </div>
             <div class="form-group">
                 <div class="col-sm-4 d-flex align-items-center">

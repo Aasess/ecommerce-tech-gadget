@@ -22,23 +22,14 @@ namespace Online_Electronics_Showroom
         {
             if (Page.IsValid)
             {
-                string CategoryId = addcategoryID.Text;
                 string shortName = addCategoryShortName.Text;
                 string longName = addCategoryLongName.Text;
 
-                // Check if CategoryId already exists
-                if (IsCategoryIdExists(CategoryId))
-                {
-                    cvcategoryIDExists.IsValid = false;
-                    return;
-                }
-
                 using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["ProductstoreCollection"].ConnectionString))
                 {
-                    string query = "INSERT INTO [Category] ([CategoryID], [shortName], [longName]) VALUES (@CategoryID, @shortName, @longName)";
+                    string query = "INSERT INTO [Category] ([shortName], [longName]) VALUES (@shortName, @longName)";
 
-                    SqlCommand cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@CategoryID", CategoryId);
+                    SqlCommand cmd = new SqlCommand(query, conn);                
                     cmd.Parameters.AddWithValue("@shortName", shortName);
                     cmd.Parameters.AddWithValue("@longName", longName);
 
@@ -47,7 +38,6 @@ namespace Online_Electronics_Showroom
                 }
 
                 // Clear the category form
-                addcategoryID.Text = "";
                 addCategoryShortName.Text = "";
                 addCategoryLongName.Text = "";
 
@@ -73,7 +63,7 @@ namespace Online_Electronics_Showroom
 
         protected void cvCategoryIdExists_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            args.IsValid = !IsCategoryIdExists(addcategoryID.Text);
+            //args.IsValid = !IsCategoryIdExists(addcategoryID.Text);
         }
 
         protected void ctl03_ItemUpdated(object sender, DetailsViewUpdatedEventArgs e)
