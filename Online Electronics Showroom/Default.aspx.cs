@@ -51,8 +51,14 @@ namespace Online_Electronics_Showroom
                 int quantity = Convert.ToInt32(row["Quantity"]);
                 int productId = Convert.ToInt32(row["ProductID"]);
 
+                // Retrieve the image path from the DataRow
+                string imagePath = row["ImagePath"].ToString();
+                // Assuming the Images folder is in the root directory, construct the full image URL
+                string imageUrl = ResolveUrl($"{imagePath}");
+
                 html += "<div class='col-md-4'>";
                 html += "<div class='card mb-4 shadow-sm'>";
+                html += "<img src='" + imageUrl + "' class='card-img-top' alt='Product Image'>";
                 html += "<div class='card-body'>";
                 html += $"<h3 class='card-title'>{productName}</h3>";
                 html += $"<p class='card-text'>Price: ${unitPrice}</p>";
