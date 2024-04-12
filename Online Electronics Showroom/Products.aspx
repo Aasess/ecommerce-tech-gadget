@@ -11,6 +11,10 @@
             <div class="logged-in__user mb-4">
                 <asp:Label ID="lblWelcome" runat="server" CssClass="text-capitalize text-info"></asp:Label>
             </div>
+
+        <%-- Check if the query string contains the "ProductId" parameter --%>
+        <% if (string.IsNullOrEmpty(Request.QueryString["ProductId"]))
+            { %>
             <div>
                 <asp:Label ID="lblProduct" runat="server" Text="Please select a Product:" CssClass="label"></asp:Label>
                 <asp:DropDownList ID="ddlProducts" runat="server" AutoPostBack="True" DataSourceID="SqlDataSource1" DataTextField="Name"
@@ -19,7 +23,7 @@
                 <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ProductStoreCollection %>"
                     SelectCommand="SELECT ProductID, Name, Description, UnitPrice FROM Products"></asp:SqlDataSource>
             </div>
-
+        <% } %>
             <div>
                 <div class="mt-3">
                     <h2>

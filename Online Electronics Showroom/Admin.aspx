@@ -186,9 +186,7 @@ ORDER BY [ProductID]">
                     <Fields>
                         <asp:BoundField DataField="ProductID" HeaderText="ProductID"
                             ReadOnly="True" SortExpression="ProductID"></asp:BoundField>
-                        <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name"></asp:BoundField>
-                        <asp:BoundField DataField="Author" HeaderText="Author" SortExpression="Author"></asp:BoundField>
-                        <asp:BoundField DataField="PublishedYear" HeaderText="PublishedYear" SortExpression="PublishedYear"></asp:BoundField>
+                        <asp:BoundField DataField="Name" HeaderText="Name" SortExpression="Name"></asp:BoundField>                       
 
                         <asp:TemplateField HeaderText="Category">
                             <ItemTemplate>
@@ -202,6 +200,15 @@ ORDER BY [ProductID]">
                         <asp:BoundField DataField="UnitPrice" HeaderText="UnitPrice" SortExpression="UnitPrice"></asp:BoundField>
                         <asp:BoundField DataField="Quantity" HeaderText="Quantity" SortExpression="Quantity"></asp:BoundField>
 
+                        <asp:TemplateField HeaderText="Upload Image">
+                            <ItemTemplate>
+                                <asp:FileUpload ID="FileUpload1" runat="server" />
+                            </ItemTemplate>
+                            <EditItemTemplate>
+                                <asp:FileUpload ID="FileUpload1" runat="server" />
+                            </EditItemTemplate>
+                        </asp:TemplateField>
+
                         <asp:CommandField ShowDeleteButton="True" ShowEditButton="True" ShowInsertButton="True"></asp:CommandField>
                     </Fields>
                 </asp:DetailsView>
@@ -214,15 +221,14 @@ ORDER BY [ProductID]">
                     ConnectionString="<%$ ConnectionStrings:ProductStoreCollection %>"
                     SelectCommand="SELECT b.*, g.[LongName] as Category FROM [Products] b INNER JOIN [Category] g ON b.[categoryID] = g.[categoryID] WHERE [ProductID] = @ProductID"
                     DeleteCommand="DELETE FROM [Products] WHERE [ProductID] = @ProductID"
-                    InsertCommand="INSERT INTO [Products] ([Name], [Author], [PublishedYear], [categoryID], [Description], [UnitPrice], [Quantity]) VALUES (@Name, @Author, @PublishedYear, @categoryID, @Description, @UnitPrice, @Quantity)"
-                    UpdateCommand="UPDATE [Products] SET [Name] = @Name, [Author] = @Author, [PublishedYear] = @PublishedYear, [categoryID] = @categoryID, [Description] = @Description, [UnitPrice] = @UnitPrice, [Quantity] = @Quantity WHERE [ProductID] = @ProductID">
+                    InsertCommand="INSERT INTO [Products] ([Name], [categoryID], [Description], [UnitPrice], [Quantity]) VALUES (@Name, @categoryID, @Description, @UnitPrice, @Quantity)"
+                    UpdateCommand="UPDATE [Products] SET [Name] = @Name, [categoryID] = @categoryID, [Description] = @Description, [UnitPrice] = @UnitPrice, [Quantity] = @Quantity WHERE [ProductID] = @ProductID">
                     <DeleteParameters>
                         <asp:Parameter Name="ProductID" Type="Int32"></asp:Parameter>
                     </DeleteParameters>
                     <InsertParameters>
                         <asp:Parameter Name="Name" Type="String"></asp:Parameter>
-                        <asp:Parameter Name="Author" Type="String"></asp:Parameter>
-                        <asp:Parameter Name="PublishedYear" Type="Int32"></asp:Parameter>
+                               
                         <asp:Parameter Name="categoryID" Type="Int32"></asp:Parameter>
                         <asp:Parameter Name="Description" Type="String"></asp:Parameter>
                         <asp:Parameter Name="UnitPrice" Type="Decimal"></asp:Parameter>
@@ -230,8 +236,7 @@ ORDER BY [ProductID]">
                     </InsertParameters>
                     <UpdateParameters>
                         <asp:Parameter Name="Name" Type="String"></asp:Parameter>
-                        <asp:Parameter Name="Author" Type="String"></asp:Parameter>
-                        <asp:Parameter Name="PublishedYear" Type="Int32"></asp:Parameter>
+                        
                         <asp:Parameter Name="categoryID" Type="Int32"></asp:Parameter>
                         <asp:Parameter Name="Description" Type="String"></asp:Parameter>
                         <asp:Parameter Name="UnitPrice" Type="Decimal"></asp:Parameter>

@@ -1,7 +1,9 @@
 ﻿using Online_Electronics_Showroom.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -14,25 +16,61 @@ namespace Online_Electronics_Showroom
         private Product selectedProduct;
         protected void Page_Load(object sender, EventArgs e)
         {
-            //bind dropdown on first load; get and show product data on every load   
-            if (!IsPostBack) ddlProducts.DataBind();
-            selectedProduct = this.GetselectedProduct();
-
-            // Check if selectedProduct is not null before accessing its properties
-            if (selectedProduct != null)
+            // Check if the query string contains the "ProductId" parameter
+            if (!string.IsNullOrEmpty(Request.QueryString["ProductId"]))
             {
-                lblName.Text = selectedProduct.Name;
-                lblDescription.Text = selectedProduct.Description;
-                lblUnitPrice.Text = selectedProduct.UnitPrice.ToString("c") + " each";
+                // Extract the product ID from the query string
+                int productId;
+                if (int.TryParse(Request.QueryString["ProductId"], out productId))
+                {
+                    // Get the selected product based on the product ID from the query string
+                    selectedProduct = GetProductById(productId);
+
+                    // Check if selectedProduct is not null before accessing its properties
+                    if (selectedProduct != null)
+                    {
+                        lblName.Text = selectedProduct.Name;
+                        lblDescription.Text = selectedProduct.Description;
+                        lblUnitPrice.Text = selectedProduct.UnitPrice.ToString("c") + " each";
+                    }
+                    else
+                    {
+                        // Handle the case where selectedProduct is null
+                        lblName.Text = "No product found";
+                        lblDescription.Text = "";
+                        lblUnitPrice.Text = "";
+                    }
+                }
+                else
+                {
+                    // Handle the case where the "ProductId" parameter in the query string is not a valid integer
+                    lblName.Text = "Invalid product ID";
+                    lblDescription.Text = "";
+                    lblUnitPrice.Text = "";
+                }
             }
             else
             {
-                // Handle the case where selectedProduct is null
-                lblName.Text = "No product selected";
-                lblDescription.Text = "";
-                lblUnitPrice.Text = "";
-            }
+                //bind dropdown on first load; get and show product data on every load   
+                if (!IsPostBack) ddlProducts.DataBind();
+                selectedProduct = this.GetselectedProduct();
 
+                // Check if selectedProduct is not null before accessing its properties
+                if (selectedProduct != null)
+                {
+                    lblName.Text = selectedProduct.Name;
+                    lblDescription.Text = selectedProduct.Description;
+                    lblUnitPrice.Text = selectedProduct.UnitPrice.ToString("c") + " each";
+                }
+                else
+                {
+                    // Handle the case where selectedProduct is null
+                    lblName.Text = "No product selected";
+                    lblDescription.Text = "";
+                    lblUnitPrice.Text = "";
+                }
+
+            }
 
             // get only first Name from cookie and set welcome message if it exists
             HttpCookie firstName = Request.Cookies["FirstName"];
@@ -67,9 +105,37 @@ namespace Online_Electronics_Showroom
                 Console.WriteLine("No rows found in productsTable.");
                 return null;
             }
-
-
         }
+
+        private Product GetProductById(int productId)
+        {
+            string connectionString = ConfigurationManager.ConnectionStrings["ProductStoreCollection"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("SELECT ProductID, Name, Description, UnitPrice FROM Products WHERE ProductID = @ProductId", con))
+                {
+                    cmd.Parameters.AddWithValue("@ProductId", productId);
+                    con.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        // Create a new product object and load it with data from the database
+                        Product product = new Product();
+                        product.ProductID = reader["ProductID"].ToString();
+                        product.Name = reader["Name"].ToString();
+                        product.Description = reader["Description"].ToString();
+                        product.UnitPrice = (decimal)reader["UnitPrice"];
+                        return product;
+                    }
+                    else
+                    {
+                        // Return null if no product is found with the given product ID
+                        return null;
+                    }
+                }
+            }
+        }
+
 
         protected void btnAdd_Click(object sender, EventArgs e)
         {
