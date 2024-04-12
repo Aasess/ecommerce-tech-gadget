@@ -1,0 +1,47 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="Online_Electronics_Showroom.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %> - My ASP.NET Application</title>
+
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+    </asp:PlaceHolder>
+
+    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+</head>
+<body>
+    <header>
+    <div class="nav justify-content-between">
+        <h1>Tech Gadget</h1>
+        <nav class="navbar">
+            <ul class="navbar-nav flex-row gap-4">
+                <li class="nav-item"><a class="nav-link" href="Default">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="Products">Products</a></li>
+                <li class="nav-item"><a class="nav-link" href="Cart">Cart</a></li>
+                <li class="nav-item"><a class="nav-link" href="Admin">Admin</a></li>
+                <li class="nav-item"><a class="nav-link" href="Login">Login</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+    <main>
+    <form id="form1" runat="server">
+        <asp:ContentPlaceHolder ID="mainPlaceholder" runat="server">
+        </asp:ContentPlaceHolder>
+    </form>
+</main>
+   
+    <%--bootstrap JS loads here--%>
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/Scripts/jquery-3.4.1.min.js") %>
+        <%: Scripts.Render("~/Scripts/bootstrap.js") %>
+    </asp:PlaceHolder>
+</body>
+</html>

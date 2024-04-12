@@ -1,0 +1,15 @@
+﻿/* our custom css */
+.container-banner {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("../Images/Jumbotron-home.jpg");
+    background-size: 100% 100%;
+    height: 350px;
+    font-size: 32px;
+    font-weight: 600;
+    color: #fff;
+    background-color: #000;
+    opacity: 0.9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+}
