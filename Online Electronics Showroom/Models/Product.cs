@@ -13,5 +13,6 @@ namespace Online_Electronics_Showroom.Models
         public string Description { get; set; }
         public decimal UnitPrice { get; set; }
         public string Quantity { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

@@ -32,6 +32,7 @@ namespace Online_Electronics_Showroom
                         lblName.Text = selectedProduct.Name;
                         lblDescription.Text = selectedProduct.Description;
                         lblUnitPrice.Text = selectedProduct.UnitPrice.ToString("c") + " each";
+                        imgProduct.ImageUrl = selectedProduct.ImageUrl;
                     }
                     else
                     {
@@ -61,6 +62,7 @@ namespace Online_Electronics_Showroom
                     lblName.Text = selectedProduct.Name;
                     lblDescription.Text = selectedProduct.Description;
                     lblUnitPrice.Text = selectedProduct.UnitPrice.ToString("c") + " each";
+                    imgProduct.ImageUrl = selectedProduct.ImageUrl;
                 }
                 else
                 {
@@ -90,19 +92,19 @@ namespace Online_Electronics_Showroom
             if (productsTable.Count > 0)
             {
                 DataRowView row = productsTable[0];
-
                 //create a new product object and load with data from row
                 Product b = new Product();
                 b.ProductID = row["ProductID"].ToString();
                 b.Name = row["Name"].ToString();
                 b.Description = row["Description"].ToString();
                 b.UnitPrice = (decimal)row["UnitPrice"];
+                b.ImageUrl = row["ImagePath"].ToString(); // Add ImagePath to Product
                 return b;
             }
             else
             {
                 // Handle the case where productsTable is empty
-                Console.WriteLine("No rows found in productsTable.");
+                Console.WriteLine("No rows found in products Table.");
                 return null;
             }
         }
@@ -112,7 +114,7 @@ namespace Online_Electronics_Showroom
             string connectionString = ConfigurationManager.ConnectionStrings["ProductStoreCollection"].ConnectionString;
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                using (SqlCommand cmd = new SqlCommand("SELECT ProductID, Name, Description, UnitPrice FROM Products WHERE ProductID = @ProductId", con))
+                using (SqlCommand cmd = new SqlCommand("SELECT ProductID, Name, Description, UnitPrice, ImagePath FROM Products WHERE ProductID = @ProductId", con))
                 {
                     cmd.Parameters.AddWithValue("@ProductId", productId);
                     con.Open();
@@ -125,6 +127,7 @@ namespace Online_Electronics_Showroom
                         product.Name = reader["Name"].ToString();
                         product.Description = reader["Description"].ToString();
                         product.UnitPrice = (decimal)reader["UnitPrice"];
+                        product.ImageUrl = reader["ImagePath"].ToString(); // Add ImagePath to Product
                         return product;
                     }
                     else

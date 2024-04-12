@@ -21,7 +21,7 @@
                     DataValueField="ProductID" CssClass="ddlProducts-select">
                 </asp:DropDownList>
                 <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ProductStoreCollection %>"
-                    SelectCommand="SELECT ProductID, Name, Description, UnitPrice FROM Products"></asp:SqlDataSource>
+                    SelectCommand="SELECT ProductID, Name, Description, UnitPrice, ImagePath FROM Products"></asp:SqlDataSource>
             </div>
         <% } %>
             <div>
@@ -31,7 +31,13 @@
                     </h2>
                 </div>
             </div>
-
+        <div>
+            <div>
+                <div>
+                    <asp:Image ID="imgProduct" runat="server" CssClass="product-image" />
+                </div>
+            </div>
+        </div>
             <div>
                 <div>
                     <p>
