@@ -1,0 +1,2 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Logout.aspx.cs" Inherits="Online_Electronics_Showroom.Logout" %>
+<%@ MasterType VirtualPath="~/Site.Master" %>

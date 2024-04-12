@@ -13,5 +13,16 @@ namespace Online_Electronics_Showroom
         {
 
         }
+
+        protected void btnSubmit_Click(object sender, EventArgs e)
+        {
+            // Your code to process the form data goes here
+
+            lblMessage.Text = "Your message has been sent successfully! Someone will contact you shortly";
+            lblMessage.CssClass = "text-success";
+
+          
+        }
+
     }
 }

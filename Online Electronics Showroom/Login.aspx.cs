@@ -33,10 +33,11 @@ namespace Online_Electronics_Showroom
             {
                 // Check if the user is an admin (replace this with your actual admin validation logic)
                 bool isAdmin = CheckAdminCredentials(txtUserName.Value, txtPassword.Value);
+                    DateTime expiry = DateTime.Now.AddMinutes(5); // Set 5min expiry time
 
+                SetCookie("Username", txtUserName.Value, expiry);
                 if (isAdmin)
                 {
-                    DateTime expiry = DateTime.Now.AddMinutes(5); // Set 5min expiry time
                     SetCookie("isAdminLoggedIn", "true", expiry);
 
                     // Redirect to the Admin page

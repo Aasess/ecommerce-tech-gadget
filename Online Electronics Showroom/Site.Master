@@ -25,9 +25,18 @@
                 <li class="nav-item"><a class="nav-link" href="Default">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="Products">Products</a></li>
                 <li class="nav-item"><a class="nav-link" href="Cart">Cart</a></li>
+                <li class="nav-item"><a class="nav-link" href="Contact">Contact Us</a></li>
                 <li class="nav-item"><a class="nav-link" href="Admin">Admin</a></li>
+                <% if (Request.Cookies["Username"] != null)
+                    { %>
+                <li class="nav-item"><a class="nav-link" href="Logout">Logout</a></li>
+                <% }
+                else
+                { %>
                 <li class="nav-item"><a class="nav-link" href="Login">Login</a></li>
+                <% } %>
             </ul>
+
         </nav>
     </div>
 </header>
