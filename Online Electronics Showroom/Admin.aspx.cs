@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -101,6 +102,36 @@ namespace Online_Electronics_Showroom
             // Rebind the DetailsView to display the selected book details
             ctl03.DataBind();
         }
+
+        protected void ctl03_ItemCommand(object sender, DetailsViewCommandEventArgs e)
+        {
+            if (e.CommandName == "Update" || e.CommandName == "Insert")
+            {
+                FileUpload FileUpload1 = ctl03.FindControl("FileUpload1") as FileUpload;
+                if (FileUpload1 != null && FileUpload1.HasFile)
+                {
+                    try
+                    {
+                        // Specify the path where you want to save the file
+                        string fileName = Path.GetFileName(FileUpload1.FileName);
+                        string filePath = "~/Images/" + fileName; // Assuming Images folder is in the root directory
+
+                        // Save the file to the server
+                        FileUpload1.SaveAs(Server.MapPath(filePath));
+
+                        // Set the image path parameter for the InsertCommand or UpdateCommand
+                        SqlDataSource8.InsertParameters["ImagePath"].DefaultValue = filePath;
+                        SqlDataSource8.UpdateParameters["ImagePath"].DefaultValue = filePath;
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle any errors that may occur during file upload
+                        // Response.Write("Error uploading file: " + ex.Message);
+                    }
+                }
+            }
+        }
+
 
         protected void GridViewCategory_RowDeleted(object sender, GridViewDeletedEventArgs e)
         {

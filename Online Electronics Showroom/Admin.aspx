@@ -182,7 +182,8 @@ ORDER BY [ProductID]">
                     ID="ctl03" DataKeyNames="ProductID" 
                     OnItemUpdated="ctl03_ItemUpdated" 
                     OnItemDeleted="ctl03_ItemDeleted" 
-                    OnItemCreated="ctl03_ItemAdded">
+                    OnItemCreated="ctl03_ItemAdded"
+                    OnItemCommand="ctl03_ItemCommand">
                     <Fields>
                         <asp:BoundField DataField="ProductID" HeaderText="ProductID"
                             ReadOnly="True" SortExpression="ProductID"></asp:BoundField>
@@ -200,9 +201,9 @@ ORDER BY [ProductID]">
                         <asp:BoundField DataField="UnitPrice" HeaderText="UnitPrice" SortExpression="UnitPrice"></asp:BoundField>
                         <asp:BoundField DataField="Quantity" HeaderText="Quantity" SortExpression="Quantity"></asp:BoundField>
 
-                        <asp:TemplateField HeaderText="Upload Image">
+                        <asp:TemplateField HeaderText="Product Image">
                             <ItemTemplate>
-                                <asp:FileUpload ID="FileUpload1" runat="server" />
+                                <asp:Image ID="ImagePath" runat="server" ImageUrl='<%# Eval("ImagePath") %>' />
                             </ItemTemplate>
                             <EditItemTemplate>
                                 <asp:FileUpload ID="FileUpload1" runat="server" />
@@ -221,32 +222,33 @@ ORDER BY [ProductID]">
                     ConnectionString="<%$ ConnectionStrings:ProductStoreCollection %>"
                     SelectCommand="SELECT b.*, g.[LongName] as Category FROM [Products] b INNER JOIN [Category] g ON b.[categoryID] = g.[categoryID] WHERE [ProductID] = @ProductID"
                     DeleteCommand="DELETE FROM [Products] WHERE [ProductID] = @ProductID"
-                    InsertCommand="INSERT INTO [Products] ([Name], [categoryID], [Description], [UnitPrice], [Quantity]) VALUES (@Name, @categoryID, @Description, @UnitPrice, @Quantity)"
-                    UpdateCommand="UPDATE [Products] SET [Name] = @Name, [categoryID] = @categoryID, [Description] = @Description, [UnitPrice] = @UnitPrice, [Quantity] = @Quantity WHERE [ProductID] = @ProductID">
+                    InsertCommand="INSERT INTO [Products] ([Name], [categoryID], [Description], [UnitPrice], [Quantity], [ImagePath]) VALUES (@Name, @categoryID, @Description, @UnitPrice, @Quantity, @ImagePath)"
+                    UpdateCommand="UPDATE [Products] SET [Name] = @Name, [categoryID] = @categoryID, [Description] = @Description, [UnitPrice] = @UnitPrice, [Quantity] = @Quantity, [ImagePath] = @ImagePath WHERE [ProductID] = @ProductID">
                     <DeleteParameters>
                         <asp:Parameter Name="ProductID" Type="Int32"></asp:Parameter>
                     </DeleteParameters>
                     <InsertParameters>
                         <asp:Parameter Name="Name" Type="String"></asp:Parameter>
-                               
                         <asp:Parameter Name="categoryID" Type="Int32"></asp:Parameter>
                         <asp:Parameter Name="Description" Type="String"></asp:Parameter>
                         <asp:Parameter Name="UnitPrice" Type="Decimal"></asp:Parameter>
                         <asp:Parameter Name="Quantity" Type="Int32"></asp:Parameter>
+                        <asp:Parameter Name="ImagePath" Type="String"></asp:Parameter>
                     </InsertParameters>
                     <UpdateParameters>
                         <asp:Parameter Name="Name" Type="String"></asp:Parameter>
-                        
                         <asp:Parameter Name="categoryID" Type="Int32"></asp:Parameter>
                         <asp:Parameter Name="Description" Type="String"></asp:Parameter>
                         <asp:Parameter Name="UnitPrice" Type="Decimal"></asp:Parameter>
                         <asp:Parameter Name="Quantity" Type="Int32"></asp:Parameter>
+                        <asp:Parameter Name="ImagePath" Type="String"></asp:Parameter>
                         <asp:Parameter Name="ProductID" Type="Int32"></asp:Parameter>
                     </UpdateParameters>
                     <SelectParameters>
                         <asp:ControlParameter ControlID="ctl02" Name="ProductID" PropertyName="SelectedValue" Type="Int32"></asp:ControlParameter>
                     </SelectParameters>
                 </asp:SqlDataSource>
+
 
                 <asp:SqlDataSource runat="server" ID="SqlDataSource5" ConnectionString="<%$ ConnectionStrings:ProductStoreCollection %>"
                     SelectCommand="SELECT b.[ProductID], b.[Name], g.[LongName] as Category FROM [Products] b INNER JOIN [Category] g ON b.[categoryID] = g.[categoryID]">
