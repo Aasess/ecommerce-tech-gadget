@@ -13,7 +13,17 @@ namespace Online_Electronics_Showroom
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            HttpCookie isAdminLoggedIn = Request.Cookies["isAdminLoggedIn"];
 
+            if (isAdminLoggedIn != null && isAdminLoggedIn.Value == "true")
+            {
+                // User is logged in as admin, display admin.aspx page
+            }
+            else
+            {
+                // User is not logged in as admin, redirect to login page
+                Response.Redirect("Login");
+            }
         }
 
 

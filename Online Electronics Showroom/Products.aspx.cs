@@ -75,9 +75,9 @@ namespace Online_Electronics_Showroom
             }
 
             // get only first Name from cookie and set welcome message if it exists
-            HttpCookie firstName = Request.Cookies["FirstName"];
-            if (firstName != null)
-                lblWelcome.Text = "<h4>welcome back, " + firstName.Value + "!</h4>";
+            HttpCookie username = Request.Cookies["Username"];
+            if (username != null)
+                lblWelcome.Text = "<h4>welcome back, " + username.Value + "!</h4>";
         }
 
         private Product GetselectedProduct()
