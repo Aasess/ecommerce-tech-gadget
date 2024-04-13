@@ -46,7 +46,7 @@ namespace Online_Electronics_Showroom
                 else
                 {
                     // Redirect to the Products page
-                    Response.Redirect("~/Products");
+                    Response.Redirect("~/Default");
                 }
             }
         }

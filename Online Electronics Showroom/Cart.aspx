@@ -8,6 +8,9 @@
     </div>
 
     <div class="container mx-auto mt-3">
+        <div>
+            <asp:Label ID="lblMessage" runat="server" CssClass="text-danger"></asp:Label>
+        </div>
         <div class="cart-info">
             <div>
                 <asp:ListBox ID="lstCart" runat="server" CssClass="list-cart"></asp:ListBox>

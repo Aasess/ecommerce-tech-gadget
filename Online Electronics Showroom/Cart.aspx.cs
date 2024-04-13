@@ -56,7 +56,20 @@ namespace Online_Electronics_Showroom
 
         protected void BtnCheckOut_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/Checkout");
+            HttpCookie isUserLoggedIn = Request.Cookies["Username"];
+
+            if (isUserLoggedIn != null)
+            {
+                // User is logged in then redirect to checkout page
+                Response.Redirect("~/Checkout");
+            }
+            else
+            {
+                // User is not logged in, then dispaly message for user to log in
+                lblMessage.Text = "You need to log in first in order to continue checkout!";
+                lblMessage.CssClass = "text-danger";
+            }
+            
         }
     }
 }
